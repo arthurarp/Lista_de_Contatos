@@ -15,5 +15,3 @@ struct Lista
   struct List* prox;
 
 };
-
-typedef struct Lista lista;
