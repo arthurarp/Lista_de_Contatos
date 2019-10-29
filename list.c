@@ -19,8 +19,29 @@ struct Lista
 
 typedef struct Lista lista;
 
+int is_empty(lista** l)
+{
+	if(l)
+	{
+		if(*l){
+			return 1;
+		
+		else
+			return -2;
+	}
+	else
+		return -3;
+}
+
 int main(void)
 {
+
+	lista* l = malloc(sizeof(lista *));
+
+	if (!l)
+		return -1;
+
+	
 
 
 
