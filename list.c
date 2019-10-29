@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Pessoa
+struct Person
 {
-	char* nome;
-	int idade;
-	char* endereco;
+	char* name;
+	int age;
+	char* adress;
 	char* email;
-	char* telefone;
+	char* number;
 };
 
-struct Lista
+struct List
 {
-	struct Pessoa pessoa;
-	struct Lista* prev;
-	struct Lista* next;
+	struct Person person;
+	struct List* prev;
+	struct List* next;
 };
 
-typedef struct Lista lista;
+typedef struct List list;
 
-int is_empty(lista** l)
+int is_empty(list** l)
 {
 	if(l)
 	{
@@ -33,13 +33,40 @@ int is_empty(lista** l)
 		return -3;
 }
 
+list** get_person_data()
+{
+	list** new = malloc(sizeof(list*)); 
+
+	printf("Please, tell us your name: ")
+	scanf("%s", new->name);
+
+	printf("\nPlease, tell us your age: ");
+	scanf("%d", &new->age);
+
+	return new;
+}
+
+
+void add_person_to_list(list** l)
+{
+	list** new = get_person_data();
+
+	if(is_empty(l))
+	{
+		*l = new;
+		new->prev = new;
+		new->next = new;
+	}
+}
+
 int main(void)
 {
 
-	lista* l = malloc(sizeof(lista *));
+	list* l = malloc(sizeof(list *));
 
 	if (!l)
 		return -1;
+
 
 	
 
