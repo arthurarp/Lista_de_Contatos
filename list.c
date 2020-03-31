@@ -13,6 +13,7 @@ int is_empty(list** l)
 	{
 		if(*l == NULL)
 			return 1;
+
 		return 0;
 	}
 	else
@@ -27,20 +28,32 @@ list* get_person_data()
 {
 	list* new = (list *) malloc(sizeof(list)); 
 
+	setbuf(stdin, NULL); // limpando buffer do teclado
+
 	printf("Nome: ");
-	scanf("%s", new->person.name);
+	scanf("%[^\n]", new->person.name);
+
+	setbuf(stdin, NULL); // limpando buffer do teclado
 
 	printf("Idade: ");
 	scanf("%d", &new->person.age);
 
+	setbuf(stdin, NULL); // limpando buffer do teclado
+
 	printf("Endereço: ");
-	scanf("%s", new->person.adress);
+	scanf("%[^\n]", new->person.adress);
+
+	setbuf(stdin, NULL); // limpando buffer do teclado
 
 	printf("E-mail: ");
-	scanf("%s", new->person.email);
+	scanf("%[^\n]", new->person.email);
+
+	setbuf(stdin, NULL); // limpando buffer do teclado
 
 	printf("Número: ");
-	scanf("%s", new->person.number);
+	scanf("%[^\n]", new->person.number);
+
+	setbuf(stdin, NULL); // limpando buffer do teclado
 
 	return new;
 }
@@ -56,6 +69,11 @@ void push(list** l)
 		new->next = NULL;
 		*l = new;
 	}
+	else
+	{
+		
+	}
+	
 }
 
 void print(list** l)
@@ -79,7 +97,6 @@ int options()
 {
 	int option;
 
-	// system("clear");
 	do
 	{
 		printf("1 - Adicionar contatos\n");
