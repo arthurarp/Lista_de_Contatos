@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include "list.h"
 
@@ -63,14 +64,14 @@ bool ordemAlfabetica(char* a, char* b)
 	printf("a >> %s\nb >> %s\n", a, b);
 
 	if(a[0] > b[0])
-		return 0;
+		return false;
 
 
 	else if(a[0] == b[0])
 		ordemAlfabetica(++a, ++b);
 
 	else
-		return 1;
+		return true;
 }
 
 
@@ -135,6 +136,47 @@ void push(list** l)
 	
 }
 
+void save(list** l, FILE* f)
+{
+	char name[50];
+	char txt[5] = ".txt";
+
+	printf("De um nome para o arquivo: ");
+	scanf("%s", name);
+
+	strncat(name, txt, 40);
+
+
+	f = fopen(name, "w");
+
+	list* aux = *l;
+
+	while(aux)
+	{
+		fputs("Nome: ", f);
+		fputs(aux->person.name, f);
+		fputc('\n', f);
+		fputs("Idade: ", f);
+		fprintf(f, "%d", aux->person.age);
+		fputc('\n', f);
+		fputs("Endereço: ", f);
+		fputs(aux->person.adress, f);
+		fputc('\n', f);
+		fputs("E-mail: ", f);
+		fputs(aux->person.email, f);
+		fputc('\n', f);
+		fputs("Número: ", f);
+		fputs(aux->person.number, f);
+		fputc('\n', f);
+		fputc(';', f);
+		fputc('\n', f);
+
+		aux = aux->next;
+	}
+
+	fclose(f);
+}
+
 void print(list** l)
 {
 	system("clear");
@@ -167,7 +209,8 @@ int options()
 		printf("\n1 - Adicionar contatos\n");
 		printf("2 - Excluir contatos\n");
 		printf("3 - Listar contatos\n");
-		printf("4 - Sair\n");
+		printf("4 - Salvar meus contatos num arquivo\n");
+		printf("5 - Sair\n");
 
 		scanf("%d", &option);
 
@@ -176,18 +219,37 @@ int options()
 	return option;
 }
 
-void menu(list** l)
+void menu(list** l, FILE* f)
 {
 	switch (options())
 	{
 		case 1:
 			push(l);
 			break;
+
 		case 2:
 			
 			break;
+
 		case 3:
 			print(l);
+			break;
+
+		case 4:
+			save(l, f);
+			break;
+
+		case 5:
+			fclose(f);
+			exit(0);
+			break;
+
+		case 6:
+
+			break;
+
+		case 7:
+
 			break;
 		
 		default:
@@ -200,8 +262,13 @@ int main(void)
 	list** l = (list **) malloc(sizeof(list *));
 	create(l);
 
-	for(;;)
-		menu(l);
+	FILE* f;
 
+
+	for(;;)
+		menu(l, f);
+
+	
+	
 	return 0;
 }
