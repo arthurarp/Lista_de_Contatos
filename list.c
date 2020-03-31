@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "list.h"
 
 void create(list** l)
@@ -58,20 +59,71 @@ list* get_person_data()
 	return new;
 }
 
+bool ordemAlfabetica(char* a, char* b)
+{
+	if(a[0] > b[0])
+		return 0;
+
+
+	else if(a[0] == b[0])
+		ordemAlfabetica(++a, ++b);
+
+	else
+		return 1;
+}
+
 
 void push(list** l)
 {
 	list* new = get_person_data();
+	list* aux = *l;
 
-	if(is_empty(l))
+	if(is_empty(l)) // Se nao houverem elementos na lista.
 	{
 		new->prev = NULL;
 		new->next = NULL;
 		*l = new;
 	}
-	else
+	else if(aux->next == NULL) // Se existir apenas um elemento na lista.
 	{
+		if(ordemAlfabetica(aux->person.name, new->person.name) == 1)
+		{
+			new->next = NULL;
+			new->prev = *l;
+			(*l)->next = new;
+			
+		}
+		else
+		{
+			new->prev = NULL;
+			new->next = *l;
+			(*l)->prev = new;
+			*l = new;
+		}
 		
+	}
+	else // Se existir 2 ou mais elementos.
+	{
+		list* last = NULL;
+
+		while(aux != NULL && ordemAlfabetica(aux->person.name, new->person.name))
+		{
+			last = aux;
+			aux = aux->next;
+		}
+
+		if(aux == NULL)
+		{
+			last->next = new;
+			new->prev = last;
+			new->next = NULL;
+		}
+		else
+		{
+			new->next = last->next;
+			new->prev = last;
+			last->next = new;
+		}
 	}
 	
 }
@@ -119,7 +171,7 @@ void menu(list** l)
 			push(l);
 			break;
 		case 2:
-			printf("vsf!\n");
+			
 			break;
 		case 3:
 			print(l);
