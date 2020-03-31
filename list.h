@@ -3,7 +3,7 @@ struct Person
 	char name[100];
 	int age;
 	char adress[100];
-	char email;
+	char email[50];
 	char number[11];
 };
 
