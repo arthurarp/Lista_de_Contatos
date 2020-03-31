@@ -22,7 +22,6 @@ int is_empty(list** l)
 		printf("Ponteiro duplo mal alocado!");
 		return -1;
 	}
-	
 }
 
 list* get_person_data()
@@ -61,6 +60,8 @@ list* get_person_data()
 
 bool ordemAlfabetica(char* a, char* b)
 {
+	printf("a >> %s\nb >> %s\n", a, b);
+
 	if(a[0] > b[0])
 		return 0;
 
@@ -104,7 +105,7 @@ void push(list** l)
 	}
 	else // Se existir 2 ou mais elementos.
 	{
-		list* last = NULL;
+		list* last = *l;
 
 		while(aux != NULL && ordemAlfabetica(aux->person.name, new->person.name))
 		{
@@ -118,6 +119,12 @@ void push(list** l)
 			new->prev = last;
 			new->next = NULL;
 		}
+		else if(aux == *l)
+		{
+			new->prev = NULL;
+			new->next = *l;
+			*l = new;
+		}
 		else
 		{
 			new->next = last->next;
@@ -130,9 +137,11 @@ void push(list** l)
 
 void print(list** l)
 {
+	system("clear");
+
 	if(is_empty(l))
 	{
-		printf("Lista vazia!\n");
+		printf("Lista vazia!\n\n");
 		return;
 	}
 
@@ -143,6 +152,10 @@ void print(list** l)
 		printf("Nome: %s\nIdade: %d\nEndereço: %s\nE-mail: %s\nNúmero: %s\n", aux->person.name, aux->person.age, aux->person.adress, aux->person.email, aux->person.number);
 		aux = aux->next;
 	}
+
+	printf("\n------------------------------------------------------------------------------\n");
+	printf("       -------------------------FIM DA LISTA-------------------------         \n");
+	printf("------------------------------------------------------------------------------\n\n");
 }
 
 int options()
@@ -151,7 +164,7 @@ int options()
 
 	do
 	{
-		printf("1 - Adicionar contatos\n");
+		printf("\n1 - Adicionar contatos\n");
 		printf("2 - Excluir contatos\n");
 		printf("3 - Listar contatos\n");
 		printf("4 - Sair\n");
@@ -189,7 +202,6 @@ int main(void)
 
 	for(;;)
 		menu(l);
-
 
 	return 0;
 }
