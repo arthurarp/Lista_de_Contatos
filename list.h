@@ -1,3 +1,6 @@
+#ifndef LIST_H
+#define LIST_H
+
 struct Person
 {
 	char name[100];
@@ -15,3 +18,6 @@ struct List
 };
 
 typedef struct List list;
+
+
+#endif
